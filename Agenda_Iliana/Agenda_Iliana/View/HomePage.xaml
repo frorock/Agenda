@@ -1,0 +1,186 @@
+﻿<UserControl x:Class="Agenda_Iliana.View.HomePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:local="clr-namespace:Agenda_Iliana.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="876">
+
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
+    <Border>
+   
+        <Grid>
+            <!--Main Section-->
+            <Border CornerRadius="0,10,10,0"
+                    Grid.Column="1">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                        <GradientStop Color="#0A003A" Offset="0"/>
+                        <GradientStop Color="#1C0E49" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <Grid x:Name="Conteneur" Grid.Column="1" Margin="30 20 20 20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+
+                    <!--Search Textbox-->
+                    <Grid Width="300" HorizontalAlignment="Left">
+                        <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="Search here ..."
+                           Visibility="{Binding ElementName=textBoxSearch, Path=Text, Converter={StaticResource BoolToVis}}" />
+
+                        <TextBox Name="textBoxSearch" Style="{StaticResource searchTextbox}" TextChanged="searchBox_TextChanged" />
+
+                        <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#B0B9C6" HorizontalAlignment="Right" />
+                    </Grid>
+
+
+
+
+
+
+                    <!--Page Title-->
+                    <TextBlock Text="Contacts" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0" Foreground="White" HorizontalAlignment="Left"/>
+
+                    <!--Add Button-->
+                    <Button Style="{StaticResource addButton}" Click="AddFriendButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Margin="0 1 8 0" Width="11" Height="11"/>
+                            <TextBlock Text="Add New Member"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!--Seprator-->
+                    <Separator Height="1" Grid.Row="3" Background="#DAE2EA" Margin="0 -1 0 10"/>
+
+                    <!--Tab buttons-->
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 10 0 0">
+                        <RadioButton Style="{StaticResource tabButton}" Content="All" Click="AllButton_Click"/>
+                        <RadioButton Style="{StaticResource tabButton}" Content="Family" Click="FamilyButton_Click" x:Name="Family_Button"/>
+                        <RadioButton Style="{StaticResource tabButton}" Content="Friends" Click="FriendButton_Click" x:Name="Friend_Button"/>
+                        <RadioButton Style="{StaticResource tabButton}" Content="Office" Click="OfficeButton_Click" x:Name="Office_Button"/>
+                    </StackPanel>
+
+                    <!--Counter Title-->
+                    <TextBlock x:Name="TB_Counter" Text="68 total contacts" Grid.Row="4" FontSize="18" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+
+
+                    <!--Members Data Grid-->
+                    <DataGrid Background="Transparent" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" x:Name="membersDataGrid" Style="{DynamicResource DataGridStyle1}">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Header="C" CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}">
+                                <DataGridCheckBoxColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource CheckBoxStyle1}"/>
+                                    </DataTemplate>
+                                </DataGridCheckBoxColumn.HeaderTemplate>
+                            </DataGridCheckBoxColumn>
+                            <DataGridTemplateColumn Header="First Name" IsReadOnly="True" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0" Background="{Binding BgColor}">
+                                                <TextBlock Text="{Binding Character}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="0 0 0 1"/>
+                                            </Border>
+
+                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Prenom}" IsReadOnly="True" Width="*"/>
+                            <DataGridTextColumn Header="Email Address" Binding="{Binding Email}" IsReadOnly="True" Width="*"/>
+                            <DataGridTextColumn Header="Phone Number" Binding="{Binding Phone}" IsReadOnly="True" Width="*"/>
+                            <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Click="EditFriendButton_Click" Style="{StaticResource gridEditButton}">
+                                                <Icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                            </Button>
+                                            <Button Click="DeleteButton_Click" Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}">
+                                                <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
+                                            </Button>
+
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Popup x:Name="ClientPopup" IsOpen="False" StaysOpen="False" Placement="Center" PopupAnimation="Scroll" AllowsTransparency="True" >
+                        <Border CornerRadius="12" Width="400" Height="400">
+
+                            <Border CornerRadius="10">
+
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                                        <GradientStop Color="#060531" Offset="0"/>
+                                        <GradientStop Color="#1B1448" Offset="0.75"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Grid Background="Transparent" Margin="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Nom" Margin="10,10,0,0" Foreground="White" FontSize="16" FontWeight="Medium"  HorizontalAlignment="Left"/>
+                                    <TextBox Style="{StaticResource filterTextBox}" Grid.Row="1" Grid.Column="1" x:Name="TB_Name" Margin="10,10" VerticalAlignment="Center" Width="250"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Prénom" Margin="10,10,0,0" Foreground="White" FontSize="16" FontWeight="Medium"  HorizontalAlignment="Left"/>
+                                    <TextBox Style="{StaticResource filterTextBox}" Grid.Row="2" Grid.Column="1" x:Name="TB_Prenom" Margin="10,10" VerticalAlignment="Center" Width="250"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Adresse" Margin="10,10,0,0" Foreground="White" FontSize="16" FontWeight="Medium"  HorizontalAlignment="Left"/>
+                                    <TextBox Style="{StaticResource filterTextBox}" Grid.Row="3" Grid.Column="1" x:Name="TB_FriendAddress" Margin="10,10" VerticalAlignment="Center" Width="250"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Téléphone" Margin="10,10,0,0" Foreground="White" FontSize="16" FontWeight="Medium"  HorizontalAlignment="Left"/>
+                                    <TextBox Style="{StaticResource filterTextBox}" Grid.Row="4" Grid.Column="1" x:Name="TB_FriendPhone" Margin="10,10" VerticalAlignment="Center" Width="250"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Email" Margin="10,10,0,0" Foreground="White" FontSize="16" FontWeight="Medium"  HorizontalAlignment="Left"/>
+                                    <TextBox Style="{StaticResource filterTextBox}" Grid.Row="5" Grid.Column="1" x:Name="TB_FriendEmail" Margin="10,10" VerticalAlignment="Center" Width="250" />
+                                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Groupe" Margin="10,10,0,0" Foreground="White" FontSize="16" FontWeight="Medium"  HorizontalAlignment="Left"/>
+                                    <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <CheckBox x:Name="FamilyCheckBox" Content="Family" Margin="10" FontSize="16" FontWeight="Bold" Foreground="White"/>
+                                        <CheckBox x:Name="FriendCheckBox" Content="Friend" Margin="10" FontSize="16" FontWeight="Bold" Foreground="White"/>
+                                        <CheckBox x:Name="OfficeCheckBox" Content="Office" Margin="10" FontSize="16" FontWeight="Bold" Foreground="White"/>
+                                    </StackPanel>
+                                    <Button Style="{StaticResource addButton}" Grid.Row="7" Grid.Column="1" Margin="0,20,50,0"  FontSize="16" VerticalAlignment="Center" Content="Submit" HorizontalAlignment="Center" Width="80" Click="SendButton_Click"/>
+                                </Grid>
+                            </Border>
+                        </Border>
+                    </Popup>
+
+
+
+                </Grid>
+            </Border>
+
+        </Grid>
+    </Border>
+</UserControl>

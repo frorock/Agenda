@@ -1,0 +1,142 @@
+﻿<UserControl x:Class="Agenda_Iliana.View.CalendarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:customcontrols="clr-namespace:Agenda_Iliana.CustomControls"
+             xmlns:local="clr-namespace:Agenda_Iliana.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="876" FontFamily="Trebuchet MS" >
+
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border  Background="#fefefe"/>
+            <Border  Grid.Column="1" Background="#1C0E49"/>
+
+
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel>
+                <!--Year selection-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 50 0 30">
+
+                    <RadioButton Content="2021" Style="{StaticResource Calendar_Button}"/>
+                    <RadioButton Content="2022" Style="{StaticResource Calendar_Button}"/>
+                    <RadioButton Content="2023" Style="{StaticResource Calendar_Button}" />
+                    <RadioButton Content="2025" Style="{StaticResource Calendar_Button}"/>
+                    <RadioButton Content="2025" Style="{StaticResource Calendar_Button}"/>
+
+                </StackPanel>
+
+                <!--Month selection-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <RadioButton Content="1" Style="{StaticResource Month_Button}"/>
+                    <RadioButton Content="2" Style="{StaticResource Month_Button}"/>
+                    <RadioButton Content="3" Style="{StaticResource Month_Button}"/>
+                    <RadioButton Content="4" Style="{StaticResource Month_Button}"/>
+                    <RadioButton Content="5" Style="{StaticResource Month_Button}"/>
+                    <RadioButton Content="6" Style="{StaticResource Month_Button}"/>
+                    <RadioButton Content="7" Style="{StaticResource Month_Button}"/>
+                    <RadioButton Content="8" Style="{StaticResource Month_Button}"/>
+                    <RadioButton Content="9" Style="{StaticResource Month_Button}"/>
+                    <RadioButton Content="10" Style="{StaticResource Month_Button}"/>
+                    <RadioButton Content="11" Style="{StaticResource Month_Button}"/>
+                    <RadioButton Content="12" Style="{StaticResource Month_Button}"/>
+                </StackPanel>
+
+                <Separator Height="0.8" Background="#cacaca" Margin="30 10"/>
+
+                <TextBlock x:Name="TB_Month" Text="November" Foreground="#7209b7" FontSize="24" TextAlignment="Center" FontWeight="SemiBold" Margin="0 15 0 20"/>
+
+                <Calendar x:Name="calendar"  CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" CalendarDayButtonStyle="{DynamicResource CalendarCalendarDayButtonStyle1}" Style="{DynamicResource CalendarStyle1}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Name="Right_StackPanel">
+                <!--Title-->
+                <StackPanel Margin="24 45 30 10" Orientation="Horizontal">
+                    <TextBlock x:Name="TB_DaynbrLeft" Text="16" FontSize="50" Foreground="#ffffff"/>
+
+                    <StackPanel Margin="10 0 0 0" VerticalAlignment="Center">
+                        <TextBlock x:Name="TB_MonthLeft" Text="November" FontSize="24" Foreground="#ffffff"/>
+                        <TextBlock x:Name="TB_DayLeft" Text="Monday" FontSize="14" Foreground="#ffd6ff"/>
+                    </StackPanel>
+
+                    <RadioButton Style="{StaticResource BigCalendar_Button}" Margin="112 0 5 0" Click="BTAngleLeft_Click">
+                        <fa:IconImage Icon="AngleLeft" Style="{StaticResource BigAngle}"/>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource BigCalendar_Button}" Click="BTAngleRight_Click">
+                        <fa:IconImage Icon="AngleRight" Style="{StaticResource BigAngle}"/>
+                    </RadioButton>
+                </StackPanel>
+
+                <TextBlock x:Name="TB_TaskLeft" Text="5 task - 2 dates left" Foreground="#e0aaff" FontSize="16" Margin="35 0 20 0"/>
+
+                <!--Add Notes-->
+                <Border Background="#7B5CD6" CornerRadius="10" HorizontalAlignment="Center" Width="355" Margin="0 30 0 20" Padding="17 15 5 15">
+
+
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="281*"/>
+                            <ColumnDefinition Width="52*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <fa:IconImage Icon="Pencil" Width="15" Height="15" Foreground="#ffd6ff"/>
+                                <TextBlock Text="Add Note" Name="TB_Note" Style="{StaticResource textHint}" MouseDown="TB_Note_MouseDown"/>
+                                <TextBox Text="" Name="TB_TxtNote" Style="{StaticResource textbox}" TextChanged="TB_TxtNote_Changed"/>
+                            </Grid>
+
+                            <Separator Margin="0 12 0 11" Height="0.8" Background="#c73f"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="23*"/>
+                                    <ColumnDefinition Width="110*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <fa:IconImage Icon="Bell" Width="15" Height="15" Foreground="#ffd6ff" Margin="0,1,0,0"/>
+                                <TextBlock Text="_ _ : _ _ - _ _ : _ _" Name="TB_Time" Style="{StaticResource textHint}" MouseDown="TB_Time_MouseDown" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0,0,0"/>
+                                <TextBox Text="" Name="TB_TxtTime" Style="{StaticResource textbox}" TextChanged="TB_TxtTime_Changed" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0,0,0"/>
+                            </Grid>
+
+                        </StackPanel>
+                        <RadioButton Grid.Column="1" Style="{StaticResource Calendar_Button}" Click="BTAddNote_Click">
+                            <fa:IconImage Icon="PlusCircle" Width="28" Height="28" Foreground="#f9F9F9"/>
+                        </RadioButton>
+                    </Grid>
+                </Border>
+
+                <!--Notes-->
+                <customcontrols:Item Title="Post on social networks" Time="09:45 - 10:30" Color="#ffd6ff" Icon="CheckCircle" IconBell="BellSlash"/>
+                <customcontrols:Item Title="Dinner with Joe" Time="09:45 - 10:30" Color="#ffd6ff" Icon="CheckCircle" IconBell="BellSlash"/>
+                <customcontrols:Item Title="Send email to office" Time="09:45 - 10:30" Color="#ffd6ff" Icon="CircleThin" IconBell="Bell"/>
+                <customcontrols:Item Title="Review app design" Time="09:45 - 10:30" Color="#ffd6ff" Icon="CircleThin" IconBell="Bell"/>
+                <customcontrols:Item Title="Call Jennifer" Time="09:45 - 10:30" Color="#ffd6ff" Icon="CircleThin" IconBell="Bell"/>
+
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</UserControl>
